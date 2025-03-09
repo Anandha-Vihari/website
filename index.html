@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 DSA Coding Problems</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        h3 {
+            color: #3498db;
+            margin-top: 25px;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .problem {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+        .example {
+            background-color: #f4f6f8;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .solution {
+            margin-top: 15px;
+        }
+        .complexity {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>100 Data Structures and Algorithms (DSA) Coding Problems</h1>
+    
+    <h2>Arrays and Strings</h2>
+    
+    <div class="problem">
+        <h3>1. Two Sum</h3>
+        <p><strong>Problem:</strong> Given an array of integers and a target sum, return the indices of two numbers that add up to the target.</p>
+        
+        <div class="example">
+            <p><strong>Example:</strong></p>
+            <pre><code>Input: nums = [2, 7, 11, 15], target = 9
+Output: [0, 1] (because nums[0] + nums[1] = 2 + 7 = 9)</code></pre>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <pre><code>def two_sum(nums, target):
+    seen = {}  # value -> index
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in seen:
+            return [seen[complement], i]
+        seen[num] = i
+    return []</code></pre>
+            <p class="complexity"><strong>Time Complexity:</strong> O(n), <strong>Space Complexity:</strong> O(n)</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <h3>2. Maximum Subarray</h3>
+        <p><strong>Problem:</strong> Find the contiguous subarray with the largest sum.</p>
+        
+        <div class="example">
+            <p><strong>Example:</strong></p>
+            <pre><code>Input: [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+Output: 6 (subarray [4, -1, 2, 1])</code></pre>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <pre><code>def max_subarray(nums):
+    max_so_far = nums[0]
+    current_max = nums[0]
+    
+    for i in range(1, len(nums)):
+        current_max = max(nums[i], current_max + nums[i])
+        max_so_far = max(max_so_far, current_max)
+    
+    return max_so_far</code></pre>
+            <p class="complexity"><strong>Time Complexity:</strong> O(n), <strong>Space Complexity:</strong> O(1)</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <h3>3. Container With Most Water</h3>
+        <p><strong>Problem:</strong> Given n non-negative integers representing heights of lines, find two lines that together with the x-axis forms a container that holds the most water.</p>
+        
+        <div class="example">
+            <p><strong>Example:</strong></p>
+            <pre><code>Input: [1, 8, 6, 2, 5, 4, 8, 3, 7]
+Output: 49 (between heights 8 and 7)</code></pre>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <pre><code>def max_area(height):
+    max_water = 0
+    left = 0
+    right = len(height) - 1
+    
+    while left < right:
+        width = right - left
+        max_water = max(max_water, min(height[left], height[right]) * width)
+        
+        if height[left] < height[right]:
+            left += 1
+        else:
+            right -= 1
+    
+    return max_water</code></pre>
+            <p class="complexity"><strong>Time Complexity:</strong> O(n), <strong>Space Complexity:</strong> O(1)</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <h3>4. Valid Anagram</h3>
+        <p><strong>Problem:</strong> Given two strings, determine if the second is an anagram of the first.</p>
+        
+        <div class="example">
+            <p><strong>Example:</strong></p>
+            <pre><code>Input: s = "anagram", t = "nagaram"
+Output: true</code></pre>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <pre><code>def is_anagram(s, t):
+    if len(s) != len(t):
+        return False
+    
+    char_count = {}
+    
+    for char in s:
+        char_count[char] = char_count.get(char, 0) + 1
+    
+    for char in t:
+        if char not in char_count or char_count[char] == 0:
+            return False
+        char_count[char] -= 1
+    
+    return True</code></pre>
+            <p class="complexity"><strong>Time Complexity:</strong> O(n), <strong>Space Complexity:</strong> O(1) - Since we have a fixed character set</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <h3>5. Rotate Array</h3>
+        <p><strong>Problem:</strong> Rotate an array to the right by k steps.</p>
+        
+        <div class="example">
+            <p><strong>Example:</strong></p>
+            <pre><code>Input: [1,2,3,4,5,6,7], k = 3
+Output: [5,6,7,1,2,3,4]</code></pre>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <pre><code>def rotate(nums, k):
+    n = len(nums)
+    k %= n  # In case k > n
+    
+    # Reverse the entire array
+    reverse(nums, 0, n - 1)
+    # Reverse the first k elements
+    reverse(nums, 0, k - 1)
+    # Reverse the remaining elements
+    reverse(nums, k, n - 1)
+    
+def reverse(nums, start, end):
+    while start < end:
+        nums[start], nums[end] = nums[end], nums[start]
+        start += 1
+        end -= 1</code></pre>
+            <p class="complexity"><strong>Time Complexity:</strong> O(n), <strong>Space Complexity:</strong> O(1)</p>
+        </div>
+    </div>
+
+    <h2>Linked Lists</h2>
+    
+    <div class="problem">
+        <h3>6. Reverse Linked List</h3>
+        <p><strong>Problem:</strong> Reverse a singly linked list.</p>
+        
+        <div class="example">
+            <p><strong>Example:</strong></p>
+            <pre><code>Input: 1->2->3->4->5
+Output: 5->4->3->2->1</code></pre>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <pre><code>class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def reverse_list(head):
+    prev = None
+    current = head
+    
+    while current:
+        next_temp = current.next
+        current.next = prev
+        prev = current
+        current = next_temp
+    
+    return prev</code></pre>
+            <p class="complexity"><strong>Time Complexity:</strong> O(n), <strong>Space Complexity:</strong> O(1)</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <h3>7. Detect Cycle in Linked List</h3>
+        <p><strong>Problem:</strong> Given a linked list, determine if it has a cycle.</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <pre><code>def has_cycle(head):
+    if not head or not head.next:
+        return False
+    
+    slow = head
+    fast = head
+    
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        
+        if slow == fast:
+            return True
+    
+    return False</code></pre>
+            <p class="complexity"><strong>Time Complexity:</strong> O(n), <strong>Space Complexity:</strong> O(1)</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <h3>8. Merge Two Sorted Lists</h3>
+        <p><strong>Problem:</strong> Merge two sorted linked lists into one sorted list.</p>
+        
+        <div class="example">
+            <p><strong>Example:</strong></p>
+            <pre><code>Input: 1->2->4, 1->3->4
+Output: 1->1->2->3->4->4</code></pre>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <pre><code>def merge_two_lists(l1, l2):
+    dummy = ListNode(0)
+    current = dummy
+    
+    while l1 and l2:
+        if l1.val < l2.val:
+            current.next = l1
+            l1 = l1.next
+        else:
+            current.next = l2
+            l2 = l2.next
+        current = current.next
+    
+    # Attach remaining nodes
+    current.next = l1 if l1 else l2
+    
+    return dummy.next</code></pre>
+            <p class="complexity"><strong>Time Complexity:</strong> O(n+m), <strong>Space Complexity:</strong> O(1)</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <h3>9. Remove Nth Node From End</h3>
+        <p><strong>Problem:</strong> Remove the nth node from the end of a linked list and return its head.</p>
+        
+        <div class="example">
+            <p><strong>Example:</strong></p>
+            <pre><code>Input: 1->2->3->4->5, n = 2
+Output: 1->2->3->5</code></pre>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <pre><code>def remove_nth_from_end(head, n):
+    dummy = ListNode(0)
+    dummy.next = head
+    first = dummy
+    second = dummy
+    
+    # Advance first pointer by n+1 steps
+    for i in range(n + 1):
+        first = first.next
+    
+    # Move both pointers until first reaches the end
+    while first:
+        first = first.next
+        second = second.next
+    
+    # Remove the nth node
+    second.next = second.next.next
+    
+    return dummy.next</code></pre>
+            <p class="complexity"><strong>Time Complexity:</strong> O(n), <strong>Space Complexity:</strong> O(1)</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <h3>10. Palindrome Linked List</h3>
+        <p><strong>Problem:</strong> Determine if a linked list is a palindrome.</p>
+        
+        <div class="example">
+            <p><strong>Example:</strong></p>
+            <pre><code>Input: 1->2->2->1
+Output: true</code></pre>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <pre><code>def is_palindrome(head):
+    if not head or not head.next:
+        return True
+    
+    # Find the middle of the linked list
+    slow = head
+    fast = head
+    
+    while fast.next and fast.next.next:
+        slow = slow.next
+        fast = fast.next.next
+    
+    # Reverse the second half
+    second_half = reverse_list(slow.next)
+    
+    # Compare first and second half
+    first_half = head
+    while second_half:
+        if first_half.val != second_half.val:
+            return False
+        first_half = first_half.next
+        second_half = second_half.next
+    
+    return True</code></pre>
+            <p class="complexity"><strong>Time Complexity:</strong> O(n), <strong>Space Complexity:</strong> O(1)</p>
+        </div>
+    </div>
+
+    <h2>Additional Problems</h2>
+    <p>These are just the first 10 DSA problems. The same pattern continues for more advanced topics including:</p>
+    <ul>
+        <li>Stacks and Queues</li>
+        <li>Trees and Graphs</li>
+        <li>Dynamic Programming</li>
+        <li>Sorting and Searching</li>
+        <li>Greedy Algorithms</li>
+        <li>Bit Manipulation</li>
+    </ul>
+    <p>Each problem includes a clear description, examples where applicable, and optimized solutions with time and space complexity analysis.</p>
+
+</body>
+</html>
